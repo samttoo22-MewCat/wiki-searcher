@@ -35,19 +35,19 @@ class WikiSearcher:
         
         self.driver.get('https://zh.wikipedia.org/wiki/Wikipedia:%E9%A6%96%E9%A1%B5')
     
-    def get_search_results(self, keyword):
+    def get_search_results(self, keyword, amount):
         result_links = []
         keyword = keyword.replace(' ', '+')
         search_link = f'https://zh.wikipedia.org/w/index.php?fulltext=1&search={keyword}&title=Special:%E6%90%9C%E7%B4%A2&ns0=1'
         self.driver.get(search_link)
         
         search_result_elements = self.driver.find_elements(By.XPATH, '//table[@class="searchResultImage"]/tbody/tr/td/a')
-        for i in range(11):
+        for i in range(amount):
             result_link = search_result_elements[i].get_attribute('href')
             result_links.append(result_link)
         return result_links
     
-    def scrap(self, url, output_file):
+    def scrap(self, url):
         """Represents one request per article"""
 
         full_url = url
@@ -99,6 +99,9 @@ class WikiSearcher:
 
     
 wiki_searcher = WikiSearcher()
-#wiki_searcher.get_search_results('台中市')
-wiki_searcher.scrap('https://zh.wikipedia.org/wiki/%E8%87%BA%E4%B8%AD%E5%B8%82', '台中市.txt')
+search_results = wiki_searcher.get_search_results('台中市', 2)
+print(len(search_results))
+for search_result in search_results:
+    wiki_searcher.scrap(search_result)
+
     

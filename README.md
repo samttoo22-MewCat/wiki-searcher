@@ -1,5 +1,3 @@
-以下是轉換為 Markdown 語法的自述文件：
-
 # Wikipedia Scraper
 
 這是一個 Python 腳本，用於在 Wikipedia 上進行關鍵字搜索，獲取搜索結果的連結，並從這些連結中抓取段落文本內容。
